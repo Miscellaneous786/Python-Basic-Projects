@@ -128,4 +128,3 @@ def choice(player):
         choice(player)   
     return player_choice
 game()
-
