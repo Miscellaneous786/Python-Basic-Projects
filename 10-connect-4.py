@@ -49,44 +49,43 @@ def enter_choice(player_choice,  alternative):
             list[int(player_choice) + 47] = alternative
         elif list[int(player_choice) + 47] in ["X", "O"] and list[int(player_choice) + 55] in [" "]:
             list[int(player_choice) + 55] = alternative
-        else:
-            pass
 
 def game():
     print("----------------------Welcome to the game.----------------------")
     player_one = input("Enter your name, player one: ")
     player_two = input("Enter your name, player two: ")
-    player_one = str(player_one)
-    player_two = str(player_two)
     tie = ""
     print("\n",f"{player_one}, your sign is 'X'")    
     print(f" {player_two}, your sign is 'O'")    
     print_board()
 
     attempts = 0
-    while attempts >= 0 and attempts <= 5:  
-        player_one_choice = choice(player_one)
-        alternative = "X"
-        enter_choice(player_one_choice, alternative)
-        print_board()
+    while attempts >= 0:
+        attempts += 1
+
+        if attempts % 2 != 0:
+            alternative = "X"
+            play_game(player_one, alternative)
+        elif attempts % 2 == 0:
+            alternative = "O"
+            play_game(player_two, alternative)
+
         winner = determine_winner(player_one, player_two, tie)
         if winner == player_one:
             print(f"-----------------------------You win, {player_one}-----------------------------")
             break
-
-        player_two_choice = choice(player_two)
-        alternative = "O"
-        enter_choice(player_two_choice, alternative)
-        print_board()
-        winner = determine_winner(player_one, player_two, tie)
         if winner == player_two:
             print(f"-----------------------------You win, {player_two}-----------------------------")
             break
-        elif winner == tie:
+        if winner == tie:
             print("-----------------------------Its a draw.-----------------------------")
             break
 
-     
+def play_game(player, alternative):
+        player_choice = choice(player)
+        enter_choice(player_choice, alternative)
+        print_board()
+   
 def determine_winner(player_one, player_two, tie):
 #   winner condition for horizontal rows
     for i in [1, 2, 3, 4, 5, 9, 10, 11, 12, 13, 25, 26, 27, 28, 29, 33, 34, 35, 36, 37, 41, 42, 43, 44, 45]:
@@ -115,7 +114,6 @@ def determine_winner(player_one, player_two, tie):
 #   tie condition
     while " " not in list:
         return tie
-
 
 def choice(player):
     player_choice = input(f"Enter the column, {player}: ")
