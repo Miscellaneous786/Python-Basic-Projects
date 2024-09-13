@@ -80,15 +80,17 @@ def game():
         attempts += 1
 
         if attempts % 2 != 0:
-            play_game(player_one, "X")
+            player_choice = choice(player_one)
+            enter_choice(player_choice, "X")
         elif attempts % 2 == 0:
             if player_two in ["Computer"]:
                 player_two_choice = random.choice([1, 2, 3, 4, 5, 6, 7, 8])
                 print(f"Computer chose {player_two_choice}")
                 enter_choice(player_two_choice,  "O")
-                print_board()
             elif player_two not in ["Computer"]:
-                play_game(player_two, "O")
+                player_choice = choice(player_two)
+                enter_choice(player_choice, "O")
+        print_board()
 
         winner = determine_winner(player_one, player_two, tie)
         if winner == player_one:
@@ -104,12 +106,7 @@ def game():
         if winner == tie:
             print("-----------------------------Its a draw.-----------------------------")
             break
-
-def play_game(player, alternative):
-    player_choice = choice(player)
-    enter_choice(player_choice, alternative)
-    print_board()
-   
+  
 def determine_winner(player_one, player_two, tie):
 #   winner condition for horizontal rows
     for i in [1, 2, 3, 4, 5, 9, 10, 11, 12, 13, 25, 26, 27, 28, 29, 33, 34, 35, 36, 37, 41, 42, 43, 44, 45]:
@@ -149,4 +146,5 @@ def choice(player):
         print(f"This column is full, {player}. Choose another column.")
         choice(player)   
     return player_choice
+
 game()
