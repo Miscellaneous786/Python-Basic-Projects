@@ -13,14 +13,27 @@ library = {
         "author": "Author Three",
         "publication_year": 2003,
         "status": "available"
+    },
+    "Book4": {
+        "author": "Author Four",
+        "publication_year": 2004,
+        "status": "available"
     }
 }
 
 def add_book():
     book = input("Enter the name of book: ")
+    while book in [""] or book.isspace() == True:
+        book = input("Invalid input. Enter the name of book: ")
     if book not in library:
         author = input("Enter the name of author: ")
+        while author in [""] or author.isspace() == True:
+            author = input("Invalid input. Enter the name of author: ")
+
         publication_year = input("Enter the publication year: ")
+        while publication_year.isnumeric() == False:
+            publication_year = input("Invalid input. Enter the publication year: ")
+
         library[book] = {
             "author": author,
             "publication year": publication_year,
@@ -33,15 +46,18 @@ def remove_book():
     book = input("Enter the name of book you want to remove: ")
     if book in library:
         library.__delitem__(book)
-    if book not in library:
+    elif book not in library:
         print("The book doesn't exist in the library.")
+    print("Book1" in library)
+    print("Book2" in library)
+    print("Book3" in library)
 
 def search_book():
     book = input("Enter the name of book you want to search for: ")
     if book in library:
         if library[book]["status"] == "available":
             print(f"{book} is available in the library.")    
-        if library[book]["status"] == "borrowed":
+        elif library[book]["status"] == "borrowed":
             print(f"{book} is borrowed by someone.")
     else:
         print(f"Sorry, the book named {book} is unavailable")    
@@ -52,7 +68,7 @@ def borrow_book():
         if library[book]["status"] == "available":
             print("You can borrow the book.")  
             library[book]["status"] = "borrowed" 
-        if library[book]["status"] == "borrowed":
+        elif library[book]["status"] == "borrowed":
             print("The book is already borrowed.")
     elif book not in library:
         print(f"The book {book} is not in the library.")
@@ -63,8 +79,8 @@ def return_book():
         if library[book]["status"] == "borrowed":
             print("You can return the book.")  
             library[book]["status"] = "available"
-        if library[book]["status"] == "available":
-            print("The book is available.")
+        elif library[book]["status"] == "available":
+            print("The book is already available.")
     if book not in library:
         print("The book was never placed in the library.")
 
@@ -78,16 +94,19 @@ def show_library():
     for book in library:  
         if library[book]["status"] != "available":
             print("  -",book)
-
+              
 def show_details_of_book():
     book = input("Enter the name of book: ")
     if book in library:   
         details = f"""
-        Details of '{book}': 
-            Author: {library[book]["author"]}  
-            Publication Year: {library[book]["publication_year"]}
+Details of '{book}': 
+    Author: {library[book]["author"]}  
+    Publication Year: {library[book]["publication_year"]}
+    Status: {library[book]["status"]}
         """
         print(details)
+    elif book in library:
+        print("Book not found.")
     
 def main():
     print(
@@ -97,9 +116,10 @@ def main():
         "4. To borrow a book.\n"
         "5. To return a book.\n"
         "6. To display the library.\n"
+        "7. To show the details of a certain book.\n"
     )
     choice = input("Enter your choice for action: ")
-    while choice not in ["1", "2", "3", "4", "5", "6"]:
+    while choice not in ["1", "2", "3", "4", "5", "6", "7"]:
         choice = input("Invalid input. Enter your choice for action: ")
     if int(choice) == 1:
         add_book()
@@ -113,13 +133,8 @@ def main():
         return_book()
     if int(choice) == 6:
         show_library()
-i = 0
-while i >= 0:
+    if int(choice) == 7:
+        show_details_of_book()
+i = 1
+while i == 1:
         main()
-
-
-
-
-
-
-
